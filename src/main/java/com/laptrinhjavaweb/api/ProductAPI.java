@@ -26,7 +26,7 @@ public class ProductAPI {
 	@Autowired
 	ProductService productService;
 	
-	@GetMapping("/")
+	@GetMapping(value={"", "/", "/product"})
 	public List<ProductDTO> showProduct() {
 		return productService.findAll();
 	}
