@@ -1,0 +1,1 @@
+web: java -jar target/BlockChain-1.0.jar
