@@ -13,4 +13,5 @@ public interface IProductService {
 	List<ProductDTO> findAll();
 	ProductDTO Update(Long id, String name, MultipartFile file, BigDecimal value, String wallet) throws IOException;
 	String delete(Long id);
+	List<ProductDTO> findByWallet(String wallet);
 }

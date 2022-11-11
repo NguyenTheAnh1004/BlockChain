@@ -32,6 +32,11 @@ public class ProductAPI {
 		return productService.findAll();
 	}
 	
+	@GetMapping("/product/{wallet}")
+	public List<ProductDTO> showProductByWallet(@PathVariable("wallet") String wallet) {
+		return productService.findByWallet(wallet);
+	}
+	
 	@PostMapping("/product")
 	public ProductDTO createProduct(@RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("value") BigDecimal value, @RequestParam("wallet") String wallet) throws IOException {
 		return productService.Save(name, file, value, wallet);

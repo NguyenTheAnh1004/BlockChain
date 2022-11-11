@@ -103,6 +103,18 @@ public class ProductService implements IProductService  {
 		productRepository.deleteById(id);
 		return "delete product " + id + " success";
 	}
+
+	@Override
+	public List<ProductDTO> findByWallet(String wallet) {
+		List<ProductEntity> listProductE = productRepository.findByWallet(wallet);
+		List<ProductDTO> listProductD = new ArrayList<ProductDTO>();
+		for(ProductEntity items : listProductE) {
+			ProductDTO dto = modelMapper.map(items, ProductDTO.class);
+			urlImage(dto);
+			listProductD.add(dto);
+		}
+		return listProductD;
+	}
 	
 	
 }
