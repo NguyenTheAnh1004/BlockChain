@@ -121,6 +121,7 @@ public class ProductService implements IProductService  {
 		// TODO Auto-generated method stub
 		ProductEntity productE = productRepository.findOneById(id);
 		ProductDTO dto = modelMapper.map(productE, ProductDTO.class);
+		urlImage(dto);
 		return dto;
 	}
 	
