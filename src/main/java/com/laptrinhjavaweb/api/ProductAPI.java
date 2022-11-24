@@ -53,5 +53,10 @@ public class ProductAPI {
 	public String delete(@PathVariable("id") Long id) {
 		return productService.delete(id);		
 	}
+	
+	@GetMapping("/productID/{id}")
+	public ProductDTO findById(@PathVariable("id") Long id) {
+		return productService.findOneById(id);
+	}
 
 }

@@ -115,6 +115,14 @@ public class ProductService implements IProductService  {
 		}
 		return listProductD;
 	}
+
+	@Override
+	public ProductDTO findOneById(Long id) {
+		// TODO Auto-generated method stub
+		ProductEntity productE = productRepository.findOneById(id);
+		ProductDTO dto = modelMapper.map(productE, ProductDTO.class);
+		return dto;
+	}
 	
 	
 }
