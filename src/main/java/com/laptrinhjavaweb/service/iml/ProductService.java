@@ -75,20 +75,36 @@ public class ProductService implements IProductService  {
 	@Override
 	public ProductDTO Update(Long id, String name, MultipartFile file, BigDecimal value, String wallet)
 			throws IOException {
-		
-		ProductDTO productDTO = new ProductDTO(name, file.getOriginalFilename(), value, wallet);
+		ProductEntity oldEntity = productRepository.findOneById(id);
+		ProductDTO productDTO;
+		System.out.println("file"+file);
+		if(file.isEmpty()) {
+			productDTO = new ProductDTO(name, oldEntity.getImg(), value, wallet);
+			System.out.println("file dell co");
+		}
+		else {
+			productDTO = new ProductDTO(name, file.getOriginalFilename(), value, wallet);
+			cloundinary.delete(
+					"blogzcoder/" + FilenameUtils.removeExtension(oldEntity.getImg().replaceAll(" ", "%20")),
+					ObjectUtils.asMap("invalidate", true));
+
+			cloundinary.upload(file.getBytes(),
+					ObjectUtils.asMap("public_id", FilenameUtils.removeExtension(file.getOriginalFilename()),
+							"unique_filename", "false", "folder", "blogzcoder/"));
+		}
+//		ProductDTO productDTO = new ProductDTO(name, file.getOriginalFilename(), value, wallet);
 		productDTO.setCode(slg.slugify(name));
 		productDTO.setId(id);
-		ProductEntity oldEntity = productRepository.findOneById(id);
+
 		
 		// upload on cloundinary
-		cloundinary.delete(
-				"blogzcoder/" + FilenameUtils.removeExtension(oldEntity.getImg().replaceAll(" ", "%20")),
-				ObjectUtils.asMap("invalidate", true));
-
-		cloundinary.upload(file.getBytes(),
-				ObjectUtils.asMap("public_id", FilenameUtils.removeExtension(file.getOriginalFilename()),
-						"unique_filename", "false", "folder", "blogzcoder/"));
+//		cloundinary.delete(
+//				"blogzcoder/" + FilenameUtils.removeExtension(oldEntity.getImg().replaceAll(" ", "%20")),
+//				ObjectUtils.asMap("invalidate", true));
+//
+//		cloundinary.upload(file.getBytes(),
+//				ObjectUtils.asMap("public_id", FilenameUtils.removeExtension(file.getOriginalFilename()),
+//						"unique_filename", "false", "folder", "blogzcoder/"));
 		// end upload
 		
 		productDTO.setCreatedDate(oldEntity.getCreatedDate());

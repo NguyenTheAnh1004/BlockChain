@@ -44,7 +44,7 @@ public class ProductAPI {
 	}
 	
 	@PutMapping("/product")
-	public ProductDTO updateProduct(@RequestParam("id") Long id, @RequestParam("name") String name, @RequestParam("file") MultipartFile file, @RequestParam("value") BigDecimal value, @RequestParam("wallet") String wallet) throws IOException {
+	public ProductDTO updateProduct(@RequestParam("id") Long id, @RequestParam("name") String name, @RequestParam(name= "file",required = false) MultipartFile file, @RequestParam("value") BigDecimal value, @RequestParam("wallet") String wallet) throws IOException {
 		return productService.Update(id, name, file, value, wallet);
 //		return new ProductDTO(name, file.getOriginalFilename(), value, wallet);
 	}
